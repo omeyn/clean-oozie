@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<workflow-app name="clean-oozie" xmlns="uri:oozie:workflow:0.2">
+
+  <start to="mk_and_rm_dir"/>
+
+  <action name="mk_and_rm_dir">
+    <fs>
+      <mkdir path='${hdfs.namenode}/tmp/testdir' />
+      <delete path='${hdfs.namenode}/tmp/testdir'/>
+    </fs>
+    <ok to="simple_hive"/>
+    <error to="kill"/>
+  </action>
+
+  <action name="simple_hive">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/show_tables.q</script>
+    </hive>
+
+    <ok to="end"/>
+    <error to="kill"/>
+  </action>
+
+  <kill name="kill">
+    <message>Occurrence download failed:[${wf:errorMessage(wf:lastErrorNode())}]</message>
+  </kill>
+
+  <end name="end"/>
+
+</workflow-app>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+
+  <!-- Hive Configuration can either be stored in this file or in the hadoop configuration files  -->
+  <!-- that are implied by Hadoop setup variables.                                                -->
+  <!-- Aside from Hadoop setup variables - this file is provided as a convenience so that Hive    -->
+  <!-- users do not have to edit hadoop configuration files (that may be managed as a centralized -->
+  <!-- resource).                                                                                 -->
+
+  <!-- Hive Execution Parameters -->
+  <property>
+    <name>hbase.zookeeper.quorum</name>
+    <value>${zookeeper.quorum}</value>
+  </property>
+  <!--<property>-->
+    <!--<name>hive.metastore.uris</name>-->
+    <!--<value>${hive.metastore.uris}</value>-->
+  <!--</property>-->
+  <property>
+    <name>oozie.launcher.mapreduce.job.user.classpath.first</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>oozie.log.hive.level</name>
+    <value>DEBUG</value>
+  </property>
+</configuration>
