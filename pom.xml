@@ -9,11 +9,11 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <hadoop.version>2.5.0-cdh5.2.0</hadoop.version>
-    <hbase.version>0.98.6-cdh5.2.0</hbase.version>
-    <hive.version>0.13.1-cdh5.2.0</hive.version>
-    <oozie.version>4.0.0-cdh5.2.0</oozie.version>
-    <zookeeper.version>3.4.5-cdh5.2.0</zookeeper.version>
+    <hadoop.version>2.6.0-cdh5.4.0</hadoop.version>
+    <hbase.version>1.0.0-cdh5.4.0</hbase.version>
+    <hive.version>1.1.0-cdh5.4.0</hive.version>
+    <oozie.version>4.1.0-cdh5.4.0</oozie.version>
+    <zookeeper.version>3.4.5-cdh5.4.0</zookeeper.version>
 
   </properties>
 
@@ -99,6 +99,17 @@
 
   <dependencies>
     <!--<dependency>-->
+      <!--<groupId>org.apache.oozie</groupId>-->
+      <!--<artifactId>oozie-client</artifactId>-->
+      <!--<version>${oozie.version}</version>-->
+      <!--<exclusions>-->
+        <!--<exclusion>-->
+          <!--<artifactId>commons-logging</artifactId>-->
+          <!--<groupId>commons-logging</groupId>-->
+        <!--</exclusion>-->
+      <!--</exclusions>-->
+    <!--</dependency>-->
+    <!--<dependency>-->
       <!--<groupId>org.apache.hadoop</groupId>-->
       <!--<artifactId>hadoop-client</artifactId>-->
       <!--<version>${hadoop.version}</version>-->
@@ -179,6 +190,7 @@
         <yarn.resourcemanager>prodmaster3-vh.gbif.org:8032</yarn.resourcemanager>
         <zookeeper.quorum>zk1.gbif.org:2181,zk2.gbif.org:2181,zk3.gbif.org:2181</zookeeper.quorum>
         <hdfs.namenode>hdfs://prodmaster1-vh.gbif.org:8020</hdfs.namenode>
+        <hive.metastore.uris>thrift://prodmaster1-vh.gbif.org:9083</hive.metastore.uris>
         <hadoop.version>2.5.0-cdh5.2.0</hadoop.version>
         <hbase.version>0.98.6-cdh5.2.0</hbase.version>
       </properties>
@@ -193,8 +205,9 @@
         <yarn.resourcemanager>c1n2.gbif.org:8032</yarn.resourcemanager>
         <zookeeper.quorum>c1n1.gbif.org:2181,c1n2.gbif.org:2181,c1n3.gbif.org:2181</zookeeper.quorum>
         <hdfs.namenode>hdfs://c1n1.gbif.org:8020</hdfs.namenode>
-        <hadoop.version>2.5.0-cdh5.2.0</hadoop.version>
-        <hbase.version>0.98.6-cdh5.2.0</hbase.version>
+        <hive.metastore.uris>thrift://c1n1.gbif.org:9083</hive.metastore.uris>
+        <hadoop.version>2.6.0-cdh5.4.0</hadoop.version>
+        <hbase.version>1.0.0-cdh5.4.0</hbase.version>
       </properties>
     </profile>
   </profiles>
