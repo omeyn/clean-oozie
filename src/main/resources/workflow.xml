@@ -28,15 +28,15 @@
 
   <action name="hive_show_tables">
     <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
       <configuration>
         <property>
           <name>oozie.launcher.mapred.job.queue.name</name>
           <value>download-work</value>
         </property>
       </configuration>
-      <job-tracker>${hadoop.jobtracker}</job-tracker>
-      <name-node>${hdfs.namenode}</name-node>
-      <job-xml>conf/hive-site.xml</job-xml>
       <script>hive-scripts/show_tables.q</script>
     </hive>
 
@@ -52,7 +52,8 @@
       <script>hive-scripts/hdfs_count_star.q</script>
     </hive>
 
-    <ok to="hbase_count_star"/>
+    <!--<ok to="hbase_count_star"/>-->
+    <ok to="end"/>
     <error to="kill"/>
   </action>
 
