@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<workflow-app name="clean-oozie" xmlns="uri:oozie:workflow:0.2">
+<workflow-app name="clean-oozie" xmlns="uri:oozie:workflow:0.4">
+  <global>
+    <configuration>
+      <property>
+        <name>oozie.launcher.mapred.job.queue.name</name>
+        <value>oozie</value>
+      </property>
+    </configuration>
+  </global>
 
   <start to="mk_and_rm_dir"/>
 
   <action name="mk_and_rm_dir">
     <fs>
+      <!--<configuration>-->
+        <!--<property>-->
+          <!--<name>oozie.launcher.mapred.job.queue.name</name>-->
+          <!--<value>download-work</value>-->
+        <!--</property>-->
+      <!--</configuration>-->
       <mkdir path='${hdfs.namenode}/tmp/testdir' />
       <delete path='${hdfs.namenode}/tmp/testdir'/>
     </fs>
@@ -14,6 +28,12 @@
 
   <action name="hive_show_tables">
     <hive xmlns="uri:oozie:hive-action:0.2">
+      <configuration>
+        <property>
+          <name>oozie.launcher.mapred.job.queue.name</name>
+          <value>download-work</value>
+        </property>
+      </configuration>
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
       <job-xml>conf/hive-site.xml</job-xml>
@@ -29,7 +49,19 @@
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
       <job-xml>conf/hive-site.xml</job-xml>
-      <script>hive-scripts/count_star.q</script>
+      <script>hive-scripts/hdfs_count_star.q</script>
+    </hive>
+
+    <ok to="hbase_count_star"/>
+    <error to="kill"/>
+  </action>
+
+  <action name="hbase_count_star">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/hbase_count_star.q</script>
     </hive>
 
     <ok to="end"/>
