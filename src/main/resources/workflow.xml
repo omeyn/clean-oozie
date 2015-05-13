@@ -8,11 +8,23 @@
       <mkdir path='${hdfs.namenode}/tmp/testdir' />
       <delete path='${hdfs.namenode}/tmp/testdir'/>
     </fs>
-    <ok to="simple_hive"/>
+    <ok to="hive_show_tables"/>
     <error to="kill"/>
   </action>
 
-  <action name="simple_hive">
+  <action name="hive_show_tables">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/show_tables.q</script>
+    </hive>
+
+    <ok to="hive_count_star"/>
+    <error to="kill"/>
+  </action>
+
+  <action name="hive_count_star">
     <hive xmlns="uri:oozie:hive-action:0.2">
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
