@@ -29,7 +29,7 @@
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
       <job-xml>conf/hive-site.xml</job-xml>
-      <script>hive-scripts/show_tables.q</script>
+      <script>hive-scripts/count_star.q</script>
     </hive>
 
     <ok to="end"/>
