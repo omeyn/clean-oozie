@@ -25,49 +25,94 @@
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
       <job-xml>conf/hive-site.xml</job-xml>
-      <configuration>
-        <property>
-          <name>oozie.launcher.mapred.job.queue.name</name>
-          <value>download-work</value>
-        </property>
-      </configuration>
       <script>hive-scripts/show_tables.q</script>
     </hive>
 
-    <ok to="hive_count_star"/>
+    <ok to="counting"/>
     <error to="kill"/>
   </action>
 
-  <action name="hive_count_star">
+  <fork name="counting">
+    <path start="hive_count_star1"/>
+    <path start="hive_count_star2"/>
+    <path start="hive_count_star3"/>
+    <path start="hive_count_star4"/>
+    <path start="hive_count_star5"/>
+  </fork>
+
+  <action name="hive_count_star1">
     <hive xmlns="uri:oozie:hive-action:0.2">
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
       <job-xml>conf/hive-site.xml</job-xml>
-      <configuration>
-        <property>
-          <name>oozie.launcher.mapred.job.queue.name</name>
-          <value>download-work</value>
-        </property>
-      </configuration>
       <script>hive-scripts/hdfs_count_star.q</script>
     </hive>
 
-    <ok to="hbase_count_star"/>
-    <!--<ok to="end"/>-->
+    <ok to="counted"/>
     <error to="kill"/>
   </action>
+
+  <action name="hive_count_star2">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/hdfs_count_star.q</script>
+    </hive>
+
+    <ok to="counted"/>
+    <error to="kill"/>
+  </action>
+
+  <action name="hive_count_star3">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/hdfs_count_star.q</script>
+    </hive>
+
+    <ok to="counted"/>
+    <error to="kill"/>
+  </action>
+
+  <action name="hive_count_star4">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/hdfs_count_star.q</script>
+    </hive>
+
+    <ok to="counted"/>
+    <error to="kill"/>
+  </action>
+
+  <action name="hive_count_star5">
+    <hive xmlns="uri:oozie:hive-action:0.2">
+      <job-tracker>${hadoop.jobtracker}</job-tracker>
+      <name-node>${hdfs.namenode}</name-node>
+      <job-xml>conf/hive-site.xml</job-xml>
+      <script>hive-scripts/hdfs_count_star.q</script>
+    </hive>
+
+    <ok to="counted"/>
+    <error to="kill"/>
+  </action>
+
+  <join name="counted" to="end"/>
 
   <action name="hbase_count_star">
     <hive xmlns="uri:oozie:hive-action:0.2">
       <job-tracker>${hadoop.jobtracker}</job-tracker>
       <name-node>${hdfs.namenode}</name-node>
       <job-xml>conf/hive-site.xml</job-xml>
-      <configuration>
-        <property>
-          <name>oozie.launcher.mapred.job.queue.name</name>
-          <value>download-work</value>
-        </property>
-      </configuration>
+      <!--<configuration>-->
+        <!--<property>-->
+          <!--<name>oozie.launcher.mapred.job.queue.name</name>-->
+          <!--<value>download-work</value>-->
+        <!--</property>-->
+      <!--</configuration>-->
       <script>hive-scripts/hbase_count_star.q</script>
     </hive>
 
